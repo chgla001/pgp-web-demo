@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <title>signal-web-demo</title>
+</head>
+<body>
+
+    <section id="registration-section" style="display: none;">
+        <div class="content">
+            <form id="reg-form" class="form-signin">
+                <h1 class="display-4">Registrierung</h1>
+                <input type="text" id="reg-username" name="reg-username" class="form-control" placeholder="Benutzername" required autofocus autocomplete="off">
+                <input type="password" id="reg-password" class="form-control" placeholder="Passwort" required>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Registrieren</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contacts-section" style="display: none;">
+        <div class="content">
+            <div class="row align-items-center">
+                <div class="col-2">
+                    <button class="btn btn-link" type="button" id="back-to-registration-btn">« zurück</button>
+                </div>
+                <div class="col">
+                    <h1 class="display-4">Kontakte</h1>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-primary float-right" type="button" id="refresh-contact-list-btn">aktualisieren</button>
+                </div>
+            </div>
+            <div id="contact-list" class="list-group"></div>
+        </div>
+    </section>
+
+    <section id="chat-section" style="display: none;">
+        <div class="content">
+            <div class="row align-items-center">
+                <div class="col-2">
+                    <button class="btn btn-link" type="button" id="back-to-contacts-btn">« zurück</button>
+                </div>
+                <div class="col">
+                    <h1 class="display-4" id="recipient-name"></h1>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-primary float-right" type="button" id="refresh-messages-btn">aktualisieren</button>
+                </div>
+            </div>
+            <div id="chat-history"></div>
+            <div class="input-group mb-3" id="chat-input">
+                <input type="text" class="form-control" placeholder="Nachricht">
+                <div class="input-group-append">
+                    <button id="send-message-btn" class="btn btn-primary" type="button">Senden</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+
+    <script src="lib/libsignal-protocol.js"></script>
+    <script src="scripts/signal/signalUtil.js"></script>
+    <script src="scripts/signal/SignalWrapper.js"></script>
+    <script src="scripts/signal/store/BrowserSignalProtocolStore.js"></script>
+
+    <script src="scripts/Api.js"></script>
+    <script src="scripts/ActionAdapter.js"></script>
+    <script src="scripts/ui/Registration.js"></script>
+    <script src="scripts/ui/ContactList.js"></script>
+    <script src="scripts/ui/Chat.js"></script>
+    <script src="scripts/App.js"></script>
+    <script>
+        new App();
+    </script>
+
+</body>
+</html>
