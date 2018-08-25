@@ -15,8 +15,9 @@ class App {
         this.contactListView.setListItemClickCallback(user => {
             this._adapter.loadUserById(user.id)
                 .then(user => {
+                    console.log(user);
                     this.setCurrentChatPartner(user);
-                    return this._adapter.createSession(user);
+                    // return this._adapter.createSession(user);
                 })
                 .then(() => {
                     this._showChat();
@@ -35,6 +36,7 @@ class App {
     }
 
     setCurrentUser(user) {
+        console.log('setCurrentUser', user);
         this._currentUser = user;
     }
 

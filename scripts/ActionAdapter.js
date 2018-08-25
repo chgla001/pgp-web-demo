@@ -1,20 +1,34 @@
 class ActionAdapter {
 
     constructor() {
-        this.wrapper = new SignalWrapper();
+        this.wrapper = new PgpWrapper();
         this.api = new Api();
     }
 
+    // register(username, password) {
+    //     return this.wrapper
+    //         .generateIdentity(username) // password has no use for Signal
+    //         .then(() => {
+    //             return this.wrapper.generatePreKeyBundle(signalUtil.randomId());
+    //         })
+    //         .then(preKeyBundle => {
+    //             return this.api.registerUser({
+    //                 username: username,
+    //                 preKeyBundle: this.wrapper.preKeyBundleToBase64(preKeyBundle)
+    //             });
+    //         });
+    // }
+
     register(username, password) {
-        return this.wrapper
-            .generateIdentity(username) // password has no use for Signal
-            .then(() => {
-                return this.wrapper.generatePreKeyBundle(signalUtil.randomId());
-            })
-            .then(preKeyBundle => {
+        return this.wrapper.generateKeyPair(username, password)
+            .then(pubkey=> {
+                console.log('api.registerUser wurde aufgerufen');
+                
                 return this.api.registerUser({
-                    username: username,
-                    preKeyBundle: this.wrapper.preKeyBundleToBase64(preKeyBundle)
+                    name: username,
+                    email: 'email.not@set.yet',
+                    password: password,
+                    pgpkey: pubkey
                 });
             });
     }
@@ -27,12 +41,12 @@ class ActionAdapter {
         return this.api.loadUserById(id);
     }
 
-    createSession(user) {
-        return this.wrapper.createSession(user);
-    }
+    // createSession(user) {
+    //     return this.wrapper.createSession(user);
+    // }
 
-    encrypt(message, recipient) {
-        return this.wrapper.encrypt(message, recipient);
+    encrypt(message, recipient, currentUser) {
+        return this.wrapper.encrypt(message, recipient, currentUser).then(encryptedData);
     }
 
     decrypt(message, sender) {

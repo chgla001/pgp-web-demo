@@ -20,7 +20,10 @@ class Registration {
 
             let username = this.$registrationUsername.value;
             let password = this.$registrationPassword.value;
-            this._adapter.register(username, password).then(user => this._registrationCallback(user));
+            this._adapter.register(username, password)
+                .then(user => {
+                    console.log('register.then',user);
+                    this._registrationCallback(user)});
         });
     }
 
