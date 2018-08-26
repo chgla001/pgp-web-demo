@@ -25,10 +25,10 @@ class Chat {
                 alert('Sie können keine leere Nachricht versenden.');
                 return;
             }
-            this._adapter.encrypt(message, this._app.getCurrentChatPartner(), this._app.getCurrentUser)
+            this._adapter.encrypt(message, this._app.getCurrentChatPartner())
                 .then((ciphertext) => {
                     console.log('adapter.encrypt ciphertext', ciphertext);
-                    return this._adapter.sendMessage(this._app.getCurrentUser(), ciphertext);
+                    return this._adapter.sendMessage(this._app.getCurrentUser(), this._app.getCurrentChatPartner(), ciphertext);
                 })
                 .then(() => {
                     this._addMessageBubble({
@@ -55,12 +55,10 @@ class Chat {
         this._adapter.loadUnreadMessages(this._app.getCurrentUser(), this._app.getCurrentChatPartner())
             .then(messages => {
                 console.log(messages);
-                if(messages || messages.length < 2){
+                if(!messages || !messages.length){
                     console.log('messages could be empty');
                 }
-
-                
-                let promises = messages.map(message => this._adapter.decrypt(message, this._app.getCurrentChatPartner()));
+                let promises = messages.map(message => this._adapter.decrypt(message, this._app.getCurrentUser()));
                 return Promise.all(promises);
             })
             .then(decryptedMessages => {

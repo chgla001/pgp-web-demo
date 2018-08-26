@@ -20,16 +20,24 @@ class ActionAdapter {
     // }
 
     register(username, password) {
+        var privkeyTemp;
         return this.wrapper.generateKeyPair(username, password)
-            .then(pubkey=> {
+            .then(keyholder => {
+                console.log(keyholder.privkey);
+
+                privkeyTemp = keyholder.privkey;
                 console.log('api.registerUser wurde aufgerufen');
-                
                 return this.api.registerUser({
                     name: username,
                     email: 'email.not@set.yet',
                     password: password,
-                    pgpkey: pubkey
+                    pgpkey: keyholder.pubkey
                 });
+            })
+            .then(user => {
+                user.privkey = privkeyTemp;
+                console.log(user);
+                return user
             });
     }
 
@@ -45,19 +53,20 @@ class ActionAdapter {
     //     return this.wrapper.createSession(user);
     // }
 
-    encrypt(message, recipient, currentUser) {
-        return this.wrapper.encrypt(message, recipient, currentUser).then(encryptedData);
+    encrypt(message, recipient) {
+        return this.wrapper.encrypt(message, recipient)
+            .then(function (encryptedData) {
+                console.log('encryptedData', encryptedData);
+                return encryptedData;
+            })
     }
 
-    decrypt(message, sender) {
-        return this.wrapper.decrypt(message, sender);
+    decrypt(message, recipient) {
+        return this.wrapper.decrypt(message, recipient);
     }
 
-    sendMessage(sender, encryptedMessage) {
-        // String -> ArrayBuffer -> Base64
-        encryptedMessage.body = signalUtil.toArrayBuffer(encryptedMessage.body);
-        encryptedMessage.body = signalUtil.arrayBufferToBase64(encryptedMessage.body);
-        return this.api.sendMessage(sender, encryptedMessage);
+    sendMessage(sender, receiver, encryptedMessage) {
+        return this.api.sendMessage(sender, receiver, encryptedMessage);
     }
 
     loadUnreadMessages(recipient, sender) {

@@ -46,16 +46,19 @@ class Api {
             });
     }
 
-    sendMessage(sender, encryptedMessage) {
+    sendMessage(sender, receiver, encryptedMessage) {
+        let data = {text: encryptedMessage,
+            timestamp: new Date().getTime(),
+            read: false,
+            senderid: sender.id,
+            receiverid: receiver.id
+
+        };
+        
         return axios({
                 method: 'post',
                 url: `${this.API_URL}/messages/new-message`,
-                data: {
-                    sourceRegistrationId: sender.registrationId,
-                    recipientRegistrationId: encryptedMessage.registrationId,
-                    body: encryptedMessage.body,
-                    type: encryptedMessage.type
-                }
+                data: data
             })
             .catch(error => {
                 throw new Error(`Fehler beim Senden einer Nachricht: ${error.message}`);
@@ -65,7 +68,7 @@ class Api {
     loadUnreadMessages(recipient, sender) {
         return axios({
                 method: 'get',
-                url: `${this.API_URL}/messages?senderid=${sender.registrationId}&recipientid=${recipient.registrationId}`
+                url: `${this.API_URL}/messages/getMessages?senderid=${sender.id}&recipientid=${recipient.id}`
             })
             .then(response => response.data)
             .catch(error => {
