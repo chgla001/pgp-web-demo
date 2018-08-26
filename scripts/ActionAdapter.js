@@ -5,20 +5,6 @@ class ActionAdapter {
         this.api = new Api();
     }
 
-    // register(username, password) {
-    //     return this.wrapper
-    //         .generateIdentity(username) // password has no use for Signal
-    //         .then(() => {
-    //             return this.wrapper.generatePreKeyBundle(signalUtil.randomId());
-    //         })
-    //         .then(preKeyBundle => {
-    //             return this.api.registerUser({
-    //                 username: username,
-    //                 preKeyBundle: this.wrapper.preKeyBundleToBase64(preKeyBundle)
-    //             });
-    //         });
-    // }
-
     register(username, password) {
         var privkeyTemp;
         return this.wrapper.generateKeyPair(username, password)
@@ -48,10 +34,6 @@ class ActionAdapter {
     loadUserById(id) {
         return this.api.loadUserById(id);
     }
-
-    // createSession(user) {
-    //     return this.wrapper.createSession(user);
-    // }
 
     encrypt(message, recipient) {
         return this.wrapper.encrypt(message, recipient)

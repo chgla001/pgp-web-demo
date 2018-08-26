@@ -10,8 +10,8 @@ class Chat {
         this.$sendMessageBtn = this.$section.querySelector('#send-message-btn');
         this.$backToContactsBtn = this.$section.querySelector('#back-to-contacts-btn');
 
-        this._adapter = new ActionAdapter(); // TODO
-        this._app = app; // TODO
+        this._adapter = new ActionAdapter();
+        this._app = app;
 
         this._backButtonClickCallback = undefined;
 

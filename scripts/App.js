@@ -7,17 +7,16 @@ class App {
         this._currentChatPartner = null;
 
         // chat view
-        this.chatView = new Chat(this); // TODO
+        this.chatView = new Chat(this);
         this.chatView.setBackButtonClickCallback(() => this._showContacts());
 
         // contact list view
-        this.contactListView = new ContactList(this); // TODO
+        this.contactListView = new ContactList(this);
         this.contactListView.setListItemClickCallback(user => {
             this._adapter.loadUserById(user.id)
                 .then(user => {
                     console.log(user);
                     this.setCurrentChatPartner(user);
-                    // return this._adapter.createSession(user);
                 })
                 .then(() => {
                     this._showChat();

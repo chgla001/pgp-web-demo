@@ -39,7 +39,8 @@ class ContactList {
             .then(userList => {
                 this.$contactList.innerHTML = '';
                 userList
-                    //.filter(user => user.name !== this._app.getCurrentUser().name) // TODO
+                    /* you can use the filter function to not display the name of the current user in the userlist*/
+                    //.filter(user => user.name !== this._app.getCurrentUser().name)
                     .forEach(user => {
                         let listItem = document.createElement('a');
                         listItem.href = '#';

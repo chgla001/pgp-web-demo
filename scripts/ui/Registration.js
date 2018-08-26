@@ -7,7 +7,7 @@ class Registration {
         this.$registrationUsername = this.$registrationForm.querySelector('#reg-username');
         this.$registrationPassword = this.$registrationForm.querySelector('#reg-password');
 
-        this._adapter = new ActionAdapter(); // TODO
+        this._adapter = new ActionAdapter();
 
         this._registrationCallback = undefined;
 
