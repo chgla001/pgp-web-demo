@@ -28,11 +28,11 @@ class PgpWrapper {
         });
     }
 
-    encrypt(message, receiver) {
-        let publicKey = receiver.pgpKey;
-        let publicKeys = openpgp.key.readArmored(publicKey).keys;
+    async encrypt(message, receiver) {
+        let publicKeys = (await openpgp.key.readArmored(receiver.pgpKey)).keys;
+
         let options = {
-            data: message,
+            message: openpgp.message.fromText(message),
             publicKeys: publicKeys
             /*, privateKeys: privateKeys*/ // when privateKeys is filled, the message will be signed. Then decryption is not (yet) possible in Android
         };
@@ -44,21 +44,21 @@ class PgpWrapper {
         });
     }
 
-    decrypt(message, receiver) {
+    async decrypt(message, receiver) {
         console.log(receiver);
 
         let publicKey = receiver.pgpKey;
         let privateKey = receiver.privkey;
-        let publicKeys = openpgp.key.readArmored(publicKey).keys;
-        let privateKeys = openpgp.key.readArmored(privateKey).keys;
+        let publicKeys = (await openpgp.key.readArmored(publicKey)).keys;
+        let privateKeys = (await openpgp.key.readArmored(privateKey)).keys;
 
         // decrypt the private key with password
-        let success = privateKeys[0].decrypt(receiver.password);
+        let success = await privateKeys[0].decrypt(receiver.password);
 
         let options = {
-            message: openpgp.message.readArmored(message.text),
+            message: await openpgp.message.readArmored(message.text),
             publicKeys: publicKeys,
-            privateKey: privateKeys[0]
+            privateKeys: privateKeys[0]
         };
 
         return openpgp.decrypt(options).then((plaintext) => {
