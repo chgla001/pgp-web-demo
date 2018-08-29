@@ -13,7 +13,7 @@ class Api {
                 data: data
             })
             .then(function (response) {
-                console.log('api registerUser',response)
+                console.log('api registerUser', response)
                 return response.data
             })
             .catch(error => {
@@ -47,14 +47,15 @@ class Api {
     }
 
     sendMessage(sender, receiver, encryptedMessage) {
-        let data = {text: encryptedMessage,
+        let data = {
+            text: encryptedMessage,
             timestamp: new Date().getTime(),
             read: false,
             senderid: sender.id,
             receiverid: receiver.id
 
         };
-        
+
         return axios({
                 method: 'post',
                 url: `${this.API_URL}/messages/new-message`,
@@ -70,7 +71,18 @@ class Api {
                 method: 'get',
                 url: `${this.API_URL}/messages/getMessages?senderid=${sender.id}&recipientid=${recipient.id}`
             })
-            .then(response => response.data)
+            .then(response => {
+                console.log('loadUnreadMessages', response.data);
+                response.data.forEach(element => {
+                    console.log('element - id', element.id);
+                    axios({
+                        method: 'post',
+                        url: `${this.API_URL}/messages/updateMessage`,
+                        data: {'id': element.id}
+                    })
+                });
+                return response.data
+            })
             .catch(error => {
                 throw new Error(`Fehler beim Laden der ungelesenen Nachrichten: ${error.message}`);
             });
