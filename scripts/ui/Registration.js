@@ -18,9 +18,6 @@ class Registration {
         this.$registrationForm.addEventListener('submit', (e) => {
             e.preventDefault(); // prevent form submitting
 
-            //start loading animation
-            document.getElementById('loader').style.display = 'block';
-
             let username = this.$registrationUsername.value;
             let password = this.$registrationPassword.value;
             this._adapter.register(username, password)
