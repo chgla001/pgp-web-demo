@@ -1,7 +1,7 @@
 class Api {
 
     constructor() {
-        this.BASE_URL = '192.168.2.116';
+        this.BASE_URL = 'localhost';
         this.PORT = 4000;
         this.API_URL = `http://${this.BASE_URL}:${this.PORT}`;
     }
