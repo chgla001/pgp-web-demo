@@ -7,8 +7,8 @@ class ContactList {
         this.$refreshContactListBtn = this.$section.querySelector('#refresh-contact-list-btn');
         this.$backToRegistrationBtn = this.$section.querySelector('#back-to-registration-btn');
 
-        this._adapter = new ActionAdapter(); // TODO
-        this._app = app; // TODO
+        this._adapter = new ActionAdapter();
+        this._app = app;
 
         this._listItemClickCallback = undefined;
         this._backButtonClickCallback = undefined;

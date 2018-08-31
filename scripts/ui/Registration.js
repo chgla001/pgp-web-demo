@@ -22,7 +22,6 @@ class Registration {
             let password = this.$registrationPassword.value;
             this._adapter.register(username, password)
                 .then(user => {
-                    console.log('register.then', user);
                     this._registrationCallback(user)
                 });
         });

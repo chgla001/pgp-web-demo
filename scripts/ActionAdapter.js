@@ -9,10 +9,7 @@ class ActionAdapter {
         var privkeyTemp;
         return this.wrapper.generateKeyPair(username, password)
             .then(keyholder => {
-                console.log(keyholder.privkey);
-
                 privkeyTemp = keyholder.privkey;
-                console.log('api.registerUser wurde aufgerufen');
                 return this.api.registerUser({
                     name: username,
                     email: 'email.not@set.yet',
@@ -22,7 +19,6 @@ class ActionAdapter {
             })
             .then(user => {
                 user.privkey = privkeyTemp;
-                console.log(user);
                 return user
             });
     }
@@ -38,7 +34,6 @@ class ActionAdapter {
     encrypt(message, recipient) {
         return this.wrapper.encrypt(message, recipient)
             .then(function (encryptedData) {
-                console.log('encryptedData', encryptedData);
                 return encryptedData;
             })
     }

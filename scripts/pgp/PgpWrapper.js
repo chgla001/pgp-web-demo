@@ -15,12 +15,8 @@ class PgpWrapper {
 
         return openpgp.generateKey(options).then((key) => {
             let privkey = key.privateKeyArmored;
-            console.log(privkey);
-
             let pubkey = key.publicKeyArmored;
-            //console.log(pubkey);
 
-            console.log(`generated key pair for ${name}!`);
             return {
                 pubkey,
                 privkey
@@ -39,7 +35,6 @@ class PgpWrapper {
 
         return openpgp.encrypt(options).then((ciphertext) => {
             let encryptedData = ciphertext.data;
-            console.log('encryptedData', encryptedData);
             return encryptedData;
         });
     }
@@ -62,7 +57,6 @@ class PgpWrapper {
         };
 
         return openpgp.decrypt(options).then((plaintext) => {
-            console.log(plaintext.data);
             return {
                 body: plaintext.data,
                 timestamp: message.timestamp

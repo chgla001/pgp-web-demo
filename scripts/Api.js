@@ -13,7 +13,6 @@ class Api {
                 data: data
             })
             .then(function (response) {
-                console.log('api registerUser', response)
                 return response.data
             })
             .catch(error => {
@@ -27,7 +26,6 @@ class Api {
                 url: `${this.API_URL}/login/allusers`
             })
             .then(function (response) {
-                console.log('loadAllUsers -response', response);
                 return response.data
             })
             .catch(error => {
@@ -72,7 +70,6 @@ class Api {
                 url: `${this.API_URL}/messages/getMessages?senderid=${sender.id}&recipientid=${recipient.id}`
             })
             .then(response => {
-                console.log('loadUnreadMessages', response.data);
                 response.data.forEach(element => {
                     console.log('element - id', element.id);
                     axios({

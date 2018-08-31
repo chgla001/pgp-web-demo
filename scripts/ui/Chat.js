@@ -27,7 +27,6 @@ class Chat {
             }
             this._adapter.encrypt(message, this._app.getCurrentChatPartner())
                 .then((ciphertext) => {
-                    console.log('adapter.encrypt ciphertext', ciphertext);
                     return this._adapter.sendMessage(this._app.getCurrentUser(), this._app.getCurrentChatPartner(), ciphertext);
                 })
                 .then(() => {
@@ -54,7 +53,6 @@ class Chat {
     _updateMessagesOfCurrentChatPartner() {
         this._adapter.loadUnreadMessages(this._app.getCurrentUser(), this._app.getCurrentChatPartner())
             .then(messages => {
-                console.log(messages);
                 if(!messages || !messages.length){
                     console.log('messages could be empty');
                 }
